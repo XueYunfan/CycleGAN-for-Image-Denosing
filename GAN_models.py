@@ -159,9 +159,9 @@ def conv_block(input_tensor, filters):
 def residual_conv_block(input_tensor, filters):
 	
 	norm = BatchNormalization()(input_tensor)
-	relu = ReLU()(norm)
+	x = ReLU()(norm)
 	x = Conv2D(filters, 3, activation = None, padding = 'same', 
-		kernel_initializer = initializers.he_normal(seed=0))(relu)
+		kernel_initializer = initializers.he_normal(seed=0))(x)
 	x = BatchNormalization()(x)
 	x = ReLU()(x)
 	x = Conv2D(filters, 3, activation = None, padding = 'same', 
@@ -169,7 +169,7 @@ def residual_conv_block(input_tensor, filters):
 	
 	#y = Cropping2D(cropping=((2, 2), (2, 2)))(input_tensor)
 	y = Conv2D(filters, 1, padding='same', activation = None, 
-		kernel_initializer = initializers.he_normal(seed=2))(relu)
+		kernel_initializer = initializers.he_normal(seed=2))(norm)
 	
 	x = add([x, y])
 	
